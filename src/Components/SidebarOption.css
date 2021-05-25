@@ -1,0 +1,19 @@
+.sidebarOption {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  border-top: 1px solid #fff;
+}
+.sidebarOption:hover {
+  opacity: 0.9;
+  background-color: #141518;
+  color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  .sidebarOption {
+    flex-direction: column;
+  }
+}

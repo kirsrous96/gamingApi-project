@@ -1,0 +1,24 @@
+.chat {
+  flex: 0.7;
+  flex-grow: 1;
+  height: 90vh;
+  border: 0.5px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chatHeader {
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.chat__headerLeft > h4 {
+  display: flex;
+  text-transform: lowercase;
+  padding: 5px;
+}
+
+.chatBottom {
+  padding-bottom: 100px;
+}

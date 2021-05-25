@@ -1,0 +1,93 @@
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: #141518;
+  border-bottom: 0.1px solid lightgray;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  z-index: 999;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  padding: 0 20px;
+  color: #fff;
+}
+
+.header__left {
+  display: flex;
+}
+.header__left > ul {
+  display: flex;
+  justify-content: space-between;
+}
+.header__left > ul > li {
+  padding-top: 25px;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #050403;
+}
+
+.header__left > a > img {
+  object-fit: contain;
+  height: 100px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.header__right > ul {
+  display: flex;
+}
+.header__right > ul > li {
+  padding-top: 25px;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #fff;
+}
+.header__rightSignup {
+  border: 1.5px solid #49274b;
+  border-radius: 25%;
+  background-color: #49274b;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px;
+}
+.header__rightSignup:hover {
+  border: 1.5px solid #49274b;
+  color: #49274b;
+  background-color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  .header__left > a > img {
+    height: 50px;
+    width: 50px;
+  }
+  .header__right > ul > li {
+    font-size: 1em;
+  }
+  .header__left > ul > li {
+    font-size: 1em;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    justify-content: space-around;
+  }
+  .header__left > a > img {
+    height: 50px;
+    width: 30px;
+  }
+  .header__right > ul > li {
+    font-size: 0.5em;
+  }
+  .header__left > ul > li {
+    font-size: 0.5em;
+  }
+}

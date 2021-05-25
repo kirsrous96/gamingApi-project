@@ -1,0 +1,28 @@
+.chatInput {
+  border-radius: 20px;
+}
+.chatInput > form {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.chatInput > form > input {
+  position: fixed;
+  bottom: 30px;
+  width: 65vw;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 20px;
+  outline: none;
+}
+@media only screen and (max-width: 768px) {
+  .chatInput > form > input {
+    width: 50vw;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .chatInput > form > input {
+    width: 35vw;
+  }
+}

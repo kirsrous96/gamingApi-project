@@ -1,0 +1,29 @@
+.game {
+  padding: 10px;
+  border: 1.5px solid #eee;
+  background-color: #eeeee4;
+  color: #141518;
+  margin: 5px;
+  cursor: pointer;
+}
+.game > video {
+  position: fixed;
+  bottom: 10vh;
+  left: 50%;
+  transform: translate(-50%);
+}
+.game > button {
+  position: fixed;
+  bottom: 5vh;
+  left: 50%;
+  transform: translate(-50%);
+}
+.active {
+  background-color: #77acf1;
+  color: #fff;
+}
+
+.inactive:hover {
+  background-color: #252627;
+  color: #fff;
+}

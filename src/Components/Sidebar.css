@@ -1,0 +1,26 @@
+.sidebar {
+  color: #000;
+  flex: 0.3;
+  max-width: 260px;
+  border-top: 1px solid #49274b;
+  border-left: 1.5px solid #fff;
+}
+
+.sidebar__header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  padding: 23px;
+}
+@media only screen and (max-width: 768px) {
+  .sidebar__header {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .sidebar {
+    flex: 0.2;
+    max-width: 200px;
+  }
+}

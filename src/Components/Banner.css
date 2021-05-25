@@ -1,0 +1,11 @@
+.banner {
+  display: grid;
+  place-items: center;
+  background-color: #141518;
+}
+
+.banner > img {
+  width: 95vw;
+  height: 75vh;
+  padding: 10px;
+}

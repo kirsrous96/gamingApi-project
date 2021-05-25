@@ -1,0 +1,44 @@
+.account {
+  display: flex;
+  background-color: #141518;
+  color: #fff;
+  height: 90vh;
+}
+.account__user > h3 {
+  font-size: 1.5em;
+  padding: 10px;
+}
+.account__user > img {
+  padding: 20px;
+  height: 150px;
+}
+
+.account__user > button {
+  padding: 10px 20px;
+  margin: 15px;
+  width: 165px;
+  height: 50px;
+  font-size: large;
+  color: #fff;
+  background-color: #0074b1;
+  border-radius: 5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.account__info > p {
+  font-size: 2rem;
+  padding: 15px;
+}
+.account__info > input {
+  height: 200px;
+  width: 400px;
+}
+
+@media only screen and (max-width: 500px) {
+  .account {
+    display: flex;
+    flex-direction: column;
+  }
+}

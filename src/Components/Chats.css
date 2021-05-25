@@ -1,0 +1,18 @@
+.chats {
+  width: 100vw;
+  background-color: #141518;
+  height: 90vh;
+}
+.chats > h2 {
+  text-align: center;
+  color: #fff;
+}
+
+.chatBody {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #eeeee4;
+  color: #000;
+  border-bottom: 1px solid #49274b;
+}
