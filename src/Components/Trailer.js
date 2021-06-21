@@ -1,11 +1,10 @@
 import './Trailer.css';
 import axios from 'axios';
 import { useState } from 'react';
-import {API_KEY} from '../Requests';
 
 function Trailer({name, id}) {
 
-    const gameURL = `https://api.rawg.io/api/games/${id}/movies?key=${API_KEY}`
+    const gameURL = `https://api.rawg.io/api/games/${id}/movies?key=${process.env.REACT_APP_API_KEY}`
     const [video,setVideo] = useState('');
     const [setter,setSetter] = useState(false);
 

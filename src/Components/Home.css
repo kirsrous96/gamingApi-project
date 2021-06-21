@@ -6,6 +6,30 @@
   text-align: center;
 }
 
+.home__genres {
+  display: flex;
+  justify-content: space-around;
+}
+.home__form button {
+  height: 35px;
+  background-color: #346751;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin: 10px;
+  font-weight: 600;
+}
+.home__form input {
+  height: 25px;
+  width: 210px;
+}
+
+.genre__list {
+  color: #fff;
+}
+
 .genres {
   padding: 50px;
   display: flex;

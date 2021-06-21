@@ -6,25 +6,15 @@ import { auth,provider } from '../firebase';
 import { useHistory } from 'react-router';
 
 
-function Signup() {
+function Admin() {
     const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
-  const [profilePic, setProfilePic] = useState("");
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [sign,setSign] = useState(true);
-
-  const signInWithGoogle = () => {
-    auth.signInWithPopup(provider).catch((error) => alert(error.message));
-    auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        history.push('/');
-      }else{
-        history.push('/signup');
-      }})
-  };
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [error, setError] = useState("");
+    const [profilePic, setProfilePic] = useState("");
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [sign,setSign] = useState(true);
 
   const loginToApp = (e) => {
     e.preventDefault();
@@ -38,6 +28,7 @@ function Signup() {
             uid: userAuth.user.uid,
             displayName: userAuth.user.displayName,
             profileUrl: userAuth.user.photoURL,
+            admin: true,
           })
         );
         history.push('/');
@@ -55,7 +46,6 @@ function Signup() {
   } 
   const register = (e) => {
     e.preventDefault();
-
     if (!error){
       auth
       .createUserWithEmailAndPassword(email, password)
@@ -72,8 +62,7 @@ function Signup() {
                 uid: userAuth.user.uid,
                 displayName: name,
                 photoUrl: profilePic,
-                favouriteGenres: [],
-                admin: false,
+                admin: true
               })
             );
           });
@@ -97,10 +86,9 @@ function Signup() {
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Full name"
+          placeholder="Admin name"
           type="text"
         />
-        
         <input
           value={profilePic}
           onChange={(e) => setProfilePic(e.target.value)}
@@ -112,34 +100,29 @@ function Signup() {
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          placeholder="Admin Email"
           type="email"
         />
-        
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="Admin Password"
           type="password"
         />
-        
         <button type="submit" onClick={sign ? register  : loginToApp}>
           {sign ? (<>Register Now</>): (<>Sign In</>)}
         </button>
       </form>
 
       <p>
-        {sign ? (<>Already a member?{" "}</>) : (<>Not a member?{" "}</>)}
+        {sign ? (<>Already created?{" "}</>) : (<>Admin not created?{" "}</>)}
         <span className="login__register" onClick={changeSign}>
-          {sign ? (<>Sign In</>): (<p>Register Now</p>)}
+          {sign ? (<>Sign In as Admin</>): (<p>Register a Admin</p>)}
         </span>
       </p>
-      <div className="googleLogin">
-        <button onClick={signInWithGoogle}>Sign In with Google</button>
-      </div>
 
     </div>
     )
 }
 
-export default Signup
+export default Admin

@@ -15,7 +15,7 @@ import Popular from "./Components/Popular";
 import Signup from "./Components/Signup";
 import Home from "./Components/Home";
 import Chats from "./Components/Chats";
-
+import Admin from "./Components/Admin";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +44,7 @@ function App() {
         <div>
            <Header />
            <Switch>
+             <div className="app__body">
             <Route path="/account">
                 <Account />
             </Route>
@@ -56,10 +57,14 @@ function App() {
             <Route exact path="/signup">
                 <Signup />
             </Route>
+            <Route exact path="/administrator">
+                <Admin />
+            </Route>
             <Route exact path="/">
               <Banner />
               <Home />
             </Route>
+            </div>
             </Switch>
         </div>
         </Router>

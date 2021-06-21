@@ -37,7 +37,9 @@ function Chat() {
 
             <div className="chat__messages">
             {roomMessages?.docs.map((doc) => {
-              const { message, timestamp, user, userImage } = doc.data();
+              const { message, timestamp, user, userImage,channelId } = doc.data();
+              const id = doc.id
+              console.log(doc.data());
               return (
                 <Message
                   key={doc.id}
@@ -45,6 +47,8 @@ function Chat() {
                   timestamp={timestamp}
                   user={user}
                   userImage={userImage}
+                  channelId={channelId}
+                  messageId={id}
                 />
               );
             })}

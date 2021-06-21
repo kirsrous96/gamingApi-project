@@ -16,7 +16,7 @@ export const chatSlice = createSlice({
 
 export const { enterRoom } = chatSlice.actions;
 
-// Selectors
+
 export const selectRoomId = (state) => state.chat.roomId;
 export const selectroomOwner = (state) => state.chat.roomOwner;
 

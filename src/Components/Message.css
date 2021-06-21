@@ -14,13 +14,14 @@
 .Umessage {
   display: flex;
   margin-left: 35vw;
+  margin-top: 10px;
   width: 30vw;
   height: 50px;
   align-items: center;
   padding: 20px;
   border: 1px solid #eee;
   border-radius: 15px;
-  background-color: #0061a8;
+  background-color: #00b7c2;
   color: #fff;
 }
 .Umessage > img {

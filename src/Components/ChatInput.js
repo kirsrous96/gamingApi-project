@@ -20,7 +20,9 @@ function ChatInput({ channelName, channelId, chatRef }) {
       message: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       user: user.displayName,
+      userId: user.uid,
       userImage: user.photoUrl,
+      channelId: channelId
     });
 
     chatRef.current.scrollIntoView({

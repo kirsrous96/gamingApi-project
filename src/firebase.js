@@ -1,7 +1,7 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAvKdBiJg3Lr62XI0i_CxBj2AlJHACnhV4",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "game-news-e2ba5.firebaseapp.com",
     projectId: "game-news-e2ba5",
     storageBucket: "game-news-e2ba5.appspot.com",
@@ -15,5 +15,6 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
+const storage = firebase.storage();
   
-export {db, auth, provider };
+export {db, auth, provider,storage };

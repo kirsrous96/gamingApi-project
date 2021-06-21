@@ -5,34 +5,17 @@ import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
 
-function Genre({title, fetchUrl}) {
+function Genre({title,description,image,gameCount}) {
     const user = useSelector(selectUser);
-    const [image,setImage] = useState('');
-    const [name,setName] = useState('');
-    const [description,setDescription] = useState('');
-    const [gameCount,setGameCount] = useState('');
-
-    useEffect(() =>{
-        async function fetchData() {
-            const request = await axios.get(fetchUrl);
-
-            let data = request.data.description.replace('<p>','').replace('</p>', '');
-            setImage(request.data.image_background);
-            setName(request.data.name);
-            setDescription(data);
-            setGameCount(request.data.games_count);
-        }
-
-        fetchData();
-    },[fetchUrl]);
-
+    const descriptionValue = description;
+    const newDescription = descriptionValue.replace('<p>','').replace('</p>', '');
 
     return (
         <div className="genre">
-            <h1>{name}</h1>
-            <h2>Number of games: {gameCount}</h2>
+            <h1>{title}</h1>
+            <h1>Number of games: {gameCount}</h1>
             {user ? (
-                <p>{description}</p>
+                <p>{newDescription}</p>
             ):(
                 <Link to="/signup">Please log in to view description</Link>
             )}

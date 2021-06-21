@@ -1,9 +1,31 @@
 .account {
   display: flex;
+  justify-content: space-around;
   background-color: #141518;
   color: #fff;
   height: 90vh;
+  padding-top: 10px;
 }
+.inputPill {
+  background-color: #0074b1;
+}
+.account__user {
+  display: flex;
+  flex-direction: column;
+}
+
+.gamePills {
+  display: flex;
+  color: #000;
+}
+
+.gamePills > p {
+  margin: 2px;
+}
+.gamePills > button {
+  height: 20px;
+}
+
 .account__user > h3 {
   font-size: 1.5em;
   padding: 10px;
@@ -11,6 +33,10 @@
 .account__user > img {
   padding: 20px;
   height: 150px;
+}
+
+.selectGame {
+  display: none;
 }
 
 .account__user > button {
@@ -27,13 +53,40 @@
   cursor: pointer;
 }
 
-.account__info > p {
+.account__formControl > div {
+  display: flex;
+}
+.account__formControl > div > select {
+  margin: 2px;
+}
+.account__formControl > div > button {
+  height: 20px;
+  margin: 2px;
+}
+.account__formControl > div > p {
+  color: #000;
+  margin-left: 5px;
+  letter-spacing: 1px;
+}
+
+.account__info > h2 {
   font-size: 2rem;
   padding: 15px;
 }
-.account__info > input {
-  height: 200px;
-  width: 400px;
+.account__formControl {
+  height: 25px;
+  width: auto;
+  background-color: #fff;
+}
+
+.account__imageUpload {
+  display: none;
+}
+
+.account__formControl > input {
+  margin-left: 5px;
+  height: 15px;
+  width: 150px;
 }
 
 @media only screen and (max-width: 500px) {
