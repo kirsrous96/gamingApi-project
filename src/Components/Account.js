@@ -27,7 +27,6 @@ function Account() {
     const handleChange = (e) =>{
         e.preventDefault();
         const targetValue = options[e.target.value];
-        console.log(options[e.target.value]);
         db.collection("users").doc(user.uid).collection("favorite").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if(doc.data().favouriteGenres === targetValue){
