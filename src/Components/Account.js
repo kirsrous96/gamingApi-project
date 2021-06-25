@@ -1,17 +1,16 @@
-import React, { useEffect, useState }  from 'react'
+import React, { useState }  from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../features/userSlice';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import './Account.css';
 import ImageUpload from './ImageUpload';
-import firebase from "firebase";
+import { addGenre, selectGenres, deleteGenre } from '../features/genreSlice';
 
 
 function Account() {
     const user = useSelector(selectUser);
-    const userCurrent = firebase.auth().currentUser;
+    let genres = useSelector(selectGenres);
     const [inputValue,setInputValue] = useState([]);
-    const [inputPill,setInputPill] = useState(false);
     const [imageChange,setImageChange] = useState(false);
     const [gameSelector,setGameSelector] = useState(false);
     const options = {"Racing": 1,"Shooter": 2,"Adventure": 3,"Action": 4,"Rpg": 5,"Fighting": 6,"Puzzle": 7,"Strategy": 10,"Card": 17,"Casual": 40,"Indie": 51,"Platformer": 83}
@@ -27,34 +26,12 @@ function Account() {
     const handleChange = (e) =>{
         e.preventDefault();
         const targetValue = options[e.target.value];
-        db.collection("users").doc(user.uid).collection("favorite").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                if(doc.data().favouriteGenres === targetValue){
-                    db.collection("users").doc(user.uid).collection("favorite").doc(doc.id).delete()
-                }
-
-            });
-        });
-        db.collection("users").doc(user.uid).collection("favorite").add({
-                favouriteGenres:options[e.target.value]
-        })
+        const index = genres.findIndex(x => x.genres==targetValue);
+        index === -1 ?  dispatch(addGenre({
+            genres: targetValue
+        })) : console.log("This item already exists");
     }
-    useEffect(()=>{
-        if(user){
 
-            db.collection("users").doc(user.uid).collection("favorite").onSnapshot((snapshot) =>
-                setInputValue(
-                    snapshot.docs.map((doc) => ({
-                      id: doc.id,
-                      data: doc.data(),
-                    }))
-                  )
-          );
-
-
-        };
-         
-    },[user?.uid]);
     const changeImage = () => {
         if (imageChange) {
             setImageChange(false);
@@ -62,14 +39,9 @@ function Account() {
             setImageChange(true);
         }
     }
-    const deletePill = (inputId) =>{
-        const pillColl = db.collection("users").doc(user.uid).collection("favorite").doc(inputId).delete().then(() => {
-          console.log("Document successfully deleted!");
-      }).catch((error) => {
-          console.error("Error removing document: ", error);
-      });
+    const deletePill = (genre) =>{
+        dispatch(deleteGenre(genre));
       }
-    
 
     return (
         <div className="account">
@@ -105,10 +77,11 @@ function Account() {
                                         <option value="Platformer" >Platformer</option>
                                     </select>
 
-                                    <div className="gamePills">{inputValue.map(input =>(
+                                    <div className="gamePills">{genres.map(genre =>(
                                         <>
-                                        <p>{getKeyByValue(options,input.data.favouriteGenres)}</p> 
-                                        <button onClick={() => deletePill(input.id)}>X</button>
+                                        <p>{getKeyByValue(options,genre.genres)}</p> 
+                                        <button onClick={() => deletePill(genre.genres)}>X</button>
+                                        
                                         </>
                                     ))}</div>
                                 </div>

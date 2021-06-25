@@ -8,7 +8,6 @@ import { selectUser } from '../features/userSlice';
 function SidebarOption({owner,title,addChannelOption,id}) {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
-
     const selectChannel = () => {
         if (id) {
           dispatch(

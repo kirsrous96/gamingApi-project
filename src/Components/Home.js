@@ -4,83 +4,63 @@ import Genre from './Genre';
 import axios from '../axios';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
-import { db } from '../firebase';
+import { selectGenres } from '../features/genreSlice';
 
 function Home() {
     const defaultList = [1,2,3,4,5,6,7,10,17,40,51,83];
+    let genreState = useSelector(selectGenres);
     const user = useSelector(selectUser);
     const [genres,setGenres] = useState([]);
     const [choice,setChoice] = useState("");
     const [zanri,setZanri] = useState([]);
     let newList = [];
-    
-    function checkDuplicate(list) {
-        let arr = list;
-        let result = false;
-      for(let i = 0; i < arr.length;i++) {
-         for(let j = 0; j < arr.length;j++) {
-            if(i !== j) {
-        if(arr[i].name === arr[j].name){
-                 arr.splice(arr[j].name,1);
-           result = true;
-           break;
-        }
-            }
-         }
-         if(result){
-            break;
-         }
-      }
-     }
-
-
-
     useEffect(()=>{
         if(user){
-            db.collection("users").doc(user.uid).collection("favorite").get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    const {favouriteGenres} = doc.data();
-                    genres.push(favouriteGenres);
-                   Promise.all(genres.map((genre) =>{
+            if (genreState.length > 0){
+                genreState.map(genre =>{
+                    
+                    const genreValue = genre.genres;
+                    genres.push(genreValue);
+                })
+                Promise.all(genres.map((genre) =>{
                     const genrePromise = (axios.get(`/genres/${genre}?key=${process.env.REACT_APP_API_KEY}`).then(values =>
                         {
                             newList = [...newList,values.data];
-                            checkDuplicate(newList);
+
                             setZanri(newList);
                         })) ;
                         
                 }));
-                });
-            });
+            }
+        }else{
         }
-
-    },[user])
-
-    const  getPromise = () => {
+    },[genreState]);
+    useEffect(() =>{
+        let list = [];
         Promise.all(genres.map((genre) =>{
             axios.get(`/genres/${genre}?key=${process.env.REACT_APP_API_KEY}`).then(values =>
             {
-                newList = [...newList,values.data];
-                setZanri(newList);
+                list = [...list,values.data];
+                setZanri(list); 
             }) ; 
-    }))}
+    }))
+    },[genres])
+
     function listAllGenres() {
         setGenres(defaultList);
-        getPromise();
     };
-    function formControl(e){
+
+    const formControl =(e) =>{
         e.preventDefault();
         setGenres([]);
-        const genreString = choice.split(',');
+        setZanri([]);
         if(choice){
+            const genreString = choice.split(',');
             const newChoice = genres.concat(genreString);
             setGenres(newChoice); 
-            getPromise();
-            setChoice('');
+                setChoice('');
         }
-        
     }
-
 
     return (
         <div className="home">
@@ -88,14 +68,12 @@ function Home() {
             <div className="home__genres">
                 <div className="home__form">
                     <button onClick={listAllGenres}>Get all game genres</button>
-                    <form onSubmit={formControl}>
+                    <form>
                         <input type="text" value={choice}
                         onChange={(e) => setChoice(e.target.value)} placeholder="Add which genres you want to see" />
-                        <button>Get your selected genres</button>
+                        <button onClick={formControl}>Get your selected genres</button>
                     </form>
                 </div>
-                
-                
                 <div className="genre__list">
                 <h2>Genre List</h2>
                 <p>1: Racing</p>
@@ -114,7 +92,7 @@ function Home() {
             </div>
             <div className="genres">
                 {zanri.map(zanr =>(
-                    <Genre title={zanr.name} description={zanr.description} image={zanr.image_background} gameCount={zanr.games_count} />
+                    <Genre key={zanri.id} title={zanr.name} description={zanr.description} image={zanr.image_background} gameCount={zanr.games_count} />
                 ))}
 
             </div>
