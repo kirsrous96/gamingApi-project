@@ -5,11 +5,12 @@ import Trailer from './Trailer';
 import './Popular.css';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
 
 function Popular() {
     const [names,setNames] = useState([]);
-    const user = useSelector(selectUser);
-
+    const user = useRecoilValue(userState);
 
     useEffect(() => {
         async function fetchData() {

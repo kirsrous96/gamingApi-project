@@ -1,22 +1,23 @@
 import React, { useState }  from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { logout, selectUser } from '../features/userSlice';
 import { auth } from '../firebase';
 import './Account.css';
 import ImageUpload from './ImageUpload';
-import { addGenre, selectGenres, deleteGenre } from '../features/genreSlice';
+import { useRecoilState } from 'recoil';
+import { userState } from '../Atoms/userState';
+import { genreState } from '../Atoms/genreState';
 
 
 function Account() {
-    const user = useSelector(selectUser);
-    let genres = useSelector(selectGenres);
+    const [user,setUser] = useRecoilState(userState);
+    const [genres,setGenres] = useRecoilState(genreState);
+    console.log(genres);
     const [inputValue,setInputValue] = useState([]);
     const [imageChange,setImageChange] = useState(false);
     const [gameSelector,setGameSelector] = useState(false);
     const options = {"Racing": 1,"Shooter": 2,"Adventure": 3,"Action": 4,"Rpg": 5,"Fighting": 6,"Puzzle": 7,"Strategy": 10,"Card": 17,"Casual": 40,"Indie": 51,"Platformer": 83}
-    const dispatch = useDispatch();
+
     const logoutOfApp = () => {
-    dispatch(logout());
+    setUser(null);
     auth.signOut();
     };
 
@@ -27,9 +28,7 @@ function Account() {
         e.preventDefault();
         const targetValue = options[e.target.value];
         const index = genres.findIndex(x => x.genres==targetValue);
-        index === -1 ?  dispatch(addGenre({
-            genres: targetValue
-        })) : console.log("This item already exists");
+        index === -1 ?  setGenres([...genres, {genres: targetValue}]) : console.log("This item already exists");
     }
 
     const changeImage = () => {
@@ -40,7 +39,7 @@ function Account() {
         }
     }
     const deletePill = (genre) =>{
-        dispatch(deleteGenre(genre));
+        setGenres(genres.filter(function(el) { return el.genres !== genre }))
       }
 
     return (
@@ -77,7 +76,7 @@ function Account() {
                                         <option value="Platformer" >Platformer</option>
                                     </select>
 
-                                    <div className="gamePills">{genres.map(genre =>(
+                                    <div className="gamePills">{genres?.map(genre =>(
                                         <>
                                         <p>{getKeyByValue(options,genre.genres)}</p> 
                                         <button onClick={() => deletePill(genre.genres)}>X</button>

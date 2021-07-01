@@ -1,21 +1,17 @@
 import React from 'react'
 import './SidebarOption.css';
 import { db } from "../firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { enterRoom } from "../features/chatSlice";
-import { selectUser } from '../features/userSlice';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
+import { chatState } from '../Atoms/chatState';
 
 function SidebarOption({owner,title,addChannelOption,id}) {
-    const dispatch = useDispatch();
-    const user = useSelector(selectUser);
+    const [chat,setChat] = useRecoilState(chatState);
+    const user = useRecoilValue(userState);
     const selectChannel = () => {
         if (id) {
-          dispatch(
-            enterRoom({
-              roomId: id,
-              roomOwner: user.displayName
-            })
-          );
+          setChat({roomId: id,
+            roomOwner: user.displayName})
         }
       };
       const addChannel = () => {

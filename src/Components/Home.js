@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Home.css';
 import Genre from './Genre';
 import axios from '../axios';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/userSlice';
-import { selectGenres } from '../features/genreSlice';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
+import { genreState } from '../Atoms/genreState';
 
 function Home() {
     const defaultList = [1,2,3,4,5,6,7,10,17,40,51,83];
-    let genreState = useSelector(selectGenres);
-    const user = useSelector(selectUser);
+    let genreStates = useRecoilValue(genreState);
+    const user = useRecoilValue(userState);
     const [genres,setGenres] = useState([]);
     const [choice,setChoice] = useState("");
     const [zanri,setZanri] = useState([]);
+    const [sortBy,setSortBy] = useState("");
     let newList = [];
+    
     useEffect(()=>{
         if(user){
-            if (genreState.length > 0){
-                genreState.map(genre =>{
+            if (genreStates.length > 0){
+                genreStates.map(genre =>{
                     
                     const genreValue = genre.genres;
                     genres.push(genreValue);
@@ -26,15 +28,13 @@ function Home() {
                     const genrePromise = (axios.get(`/genres/${genre}?key=${process.env.REACT_APP_API_KEY}`).then(values =>
                         {
                             newList = [...newList,values.data];
-
                             setZanri(newList);
                         })) ;
                         
                 }));
             }
-        }else{
         }
-    },[genreState]);
+    },[genreStates]);
     useEffect(() =>{
         let list = [];
         Promise.all(genres.map((genre) =>{
@@ -45,6 +45,26 @@ function Home() {
             }) ; 
     }))
     },[genres])
+
+
+    const sortById =  (a,b) =>a.id > b.id ? 1: -1
+    const sortByTitle =  (a,b) =>
+        a.slug > b.slug ? 1: -1
+    const sortByCount =  (a,b) =>
+        a.games_count> b.games_count ? 1: -1;
+
+    function sorting(){
+        let sorted;
+        if(sortBy === 'title'){
+            sorted = sortByTitle
+           }else if (sortBy === 'id'){
+            sorted = sortById
+           }else{
+            sorted = sortByCount
+           }
+           console.log(sorted);
+           return sorted
+    }
 
     function listAllGenres() {
         setGenres(defaultList);
@@ -61,6 +81,8 @@ function Home() {
                 setChoice('');
         }
     }
+    
+
 
     return (
         <div className="home">
@@ -76,6 +98,7 @@ function Home() {
                 </div>
                 <div className="genre__list">
                 <h2>Genre List</h2>
+                <div className="genre__listItems">
                 <p>1: Racing</p>
               <p>2:Shooter</p>
                <p>3:Adventure</p>
@@ -88,10 +111,20 @@ function Home() {
                <p>40:Casual</p>
                <p>51:Indie</p>
                <p>83:Platformer</p>
+               </div>
+
             </div>
+            <form>
+                    <p> Sort by: </p>
+                    <select value={sortBy} onChange={e=>setSortBy(e.target.value)} name="genres" id="genres">
+                        <option value="title">Title</option>
+                        <option value="gameCount">Game Count</option>
+                        <option value="id">Id</option>
+                    </select>
+                </form>
             </div>
             <div className="genres">
-                {zanri.map(zanr =>(
+                {zanri.sort(sorting()).map(zanr =>(
                     <Genre key={zanri.id} title={zanr.name} description={zanr.description} image={zanr.image_background} gameCount={zanr.games_count} />
                 ))}
 

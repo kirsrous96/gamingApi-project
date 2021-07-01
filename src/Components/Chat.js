@@ -4,13 +4,14 @@ import './Chat.css';
 import Message from "./Message";
 import ChatInput from "./ChatInput";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { useSelector } from "react-redux";
-import { selectRoomId } from "../features/chatSlice";
+import { chatState } from "../Atoms/chatState";
+import { useRecoilValue } from "recoil";
 
 function Chat() {
     const chatRef = useRef(null);
-  const roomId = useSelector(selectRoomId);
-  const [roomDetails] = useCollection(
+    const chatStates = useRecoilValue(chatState);
+    const roomId = chatStates.roomId;
+    const [roomDetails] = useCollection(
     roomId && db.collection("rooms").doc(roomId)
   );
   const [roomMessages, roomLoading] = useCollection(

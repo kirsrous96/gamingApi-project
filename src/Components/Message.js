@@ -1,13 +1,13 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/userSlice';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
 import { db } from '../firebase';
 import './Message.css'
 
 function Message({ message,messageId, timestamp,channelId, user, userImage}) {
 
 
-  const userU = useSelector(selectUser);
+  const userU = useRecoilValue(userState);
 
   const deleteMessage = () =>{
     const messageColl = db.collection("rooms").doc(channelId).collection('messages').doc(messageId).delete().then(() => {

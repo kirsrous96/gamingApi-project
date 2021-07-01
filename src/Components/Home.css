@@ -4,6 +4,7 @@
 .home > h1 {
   color: #fff;
   text-align: center;
+  padding: 30px;
 }
 
 .home__genres {
@@ -26,8 +27,23 @@
   width: 210px;
 }
 
+.home__genres > form {
+  color: #fff;
+}
 .genre__list {
   color: #fff;
+}
+.genre__list > h2 {
+  text-align: center;
+}
+
+.genre__listItems {
+  width: 30vw;
+  flex-wrap: wrap;
+  display: flex;
+}
+.genre__listItems > p {
+  padding: 15px;
 }
 
 .genres {

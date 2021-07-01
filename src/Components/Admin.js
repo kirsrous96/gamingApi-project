@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import './Signup.css';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/userSlice';
-import { auth,provider } from '../firebase';
+import { auth } from '../firebase';
 import { useHistory } from 'react-router';
+import { useRecoilState } from 'recoil';
+import { userState } from '../Atoms/userState';
 
 
 function Admin() {
+    const [user,setUser] = useRecoilState(userState);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [error, setError] = useState("");
     const [profilePic, setProfilePic] = useState("");
-    const dispatch = useDispatch();
     const history = useHistory();
     const [sign,setSign] = useState(true);
 
@@ -22,15 +22,13 @@ function Admin() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-            displayName: userAuth.user.displayName,
-            profileUrl: userAuth.user.photoURL,
-            admin: true,
+        setUser({ 
+          email: userAuth.email,
+          uid: userAuth.uid,
+          displayName: userAuth.displayName,
+          photoUrl: userAuth.photoURL,
+          admin: true
           })
-        );
         history.push('/');
       })
       .catch((error) => setError(error.message));
@@ -56,15 +54,13 @@ function Admin() {
             photoURL: profilePic,
           })
           .then(() => {
-            dispatch(
-              login({
-                email: userAuth.user.email,
-                uid: userAuth.user.uid,
-                displayName: name,
-                photoUrl: profilePic,
-                admin: true
+            setUser({ 
+              email: userAuth.email,
+              uid: userAuth.uid,
+              displayName: userAuth.displayName,
+              photoUrl: userAuth.photoURL,
+              admin: true
               })
-            );
           });
           history.push('/');
       })

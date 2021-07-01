@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import './App.css';
 import Banner from './Components/Banner';
-import { useDispatch } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
-import { login, logout} from "./features/userSlice";
 import { auth } from "./firebase";
 import Header from "./Components/Header";
 import Account from "./Components/Account";
@@ -16,26 +14,26 @@ import Signup from "./Components/Signup";
 import Home from "./Components/Home";
 import Chats from "./Components/Chats";
 import Admin from "./Components/Admin";
+import { useRecoilState } from "recoil";
+import { userState } from "./Atoms/userState";
 
 function App() {
-  const dispatch = useDispatch();
+  const [user,setUser] = useRecoilState(userState);
 
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
-        dispatch(
-          login({
+          setUser({ 
             email: userAuth.email,
             uid: userAuth.uid,
             displayName: userAuth.displayName,
             photoUrl: userAuth.photoURL,
-          })
-        );
+            })
       } else {
-        dispatch(logout());
+        setUser(null);
       }
     });
-  }, [dispatch]);
+  }, []);
 
 
   return (
@@ -49,7 +47,7 @@ function App() {
                 <Account />
             </Route>
             <Route path="/popular">
-                <Popular />
+              <Popular />
             </Route>
             <Route path="/chat">
                 <Chats />

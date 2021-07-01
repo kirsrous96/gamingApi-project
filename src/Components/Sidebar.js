@@ -1,13 +1,13 @@
 import React from 'react'
 import './Sidebar.css';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/userSlice';
 import { db } from "../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
 import SidebarOption from './SidebarOption';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
 
 function Sidebar() {
-    const user = useSelector(selectUser);
+    const user = useRecoilValue(userState);
     const [channels] = useCollection(db.collection("rooms"));
 
     return (

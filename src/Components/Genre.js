@@ -1,11 +1,11 @@
 import './Genre.css'
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/userSlice';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../Atoms/userState';
 
 function Genre({title,description,image,gameCount}) {
-    const user = useSelector(selectUser);
+    const user = useRecoilValue(userState);
     const descriptionValue = description;
     const newDescription = descriptionValue.replace('<p>','').replace('</p>', '');
 

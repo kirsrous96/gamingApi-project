@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import './ChatInput.css'
 import { db } from "../firebase";
 import firebase from "firebase";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
+import { useRecoilValue } from "recoil";
+import { userState } from "../Atoms/userState";
 
 function ChatInput({ channelName, channelId, chatRef }) {
     const [input, setInput] = useState("");
-    const user = useSelector(selectUser);
+    const user = useRecoilValue(userState);
 
   const sendMessage = (e) => {
     e.preventDefault();
